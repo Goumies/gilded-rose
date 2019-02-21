@@ -44,4 +44,24 @@ public class GildedRoseTest {
         assertEquals(initalQuality + additionalQualityForInitialQualityUnderFifty + additionalQualityForInitialSellInUnderEleven + additionalQualityForInitialSellInUnderSix, app.items[0].quality);
     }
 
+    @Test
+    public void given_default_item_with_0_for_quality_and_0_for_sellIn_should_return_sellIn_decreased_by_1() {
+        final int initialSellIn = 0;
+        int initialQuality = 0;
+        Item[] items = new Item[]{new Item("Default", initialSellIn, initialQuality)};
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(initialSellIn - 1, app.items[0].sellIn);
+    }
+
+    @Test
+    public void given_default_item_with_a_greater_than_1_quality_and_0_for_sellIn_should_return_quality_decreased_by_1() {
+        final int initialSellIn = 0;
+        int initialQuality = 0;
+        Item[] items = new Item[]{new Item("Default", initialSellIn, initialQuality)};
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(initialSellIn - 1, app.items[0].sellIn);
+    }
+
 }
