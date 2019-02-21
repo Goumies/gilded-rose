@@ -45,6 +45,16 @@ public class GildedRoseTest {
     }
 
     @Test
+    public void given_sulfuras_item_with_0_for_quality_and_0_for_sellIn_should_return_sellIn_unchanged_item() {
+        final int initialSellIn = 0;
+        int initialQuality = 0;
+        Item[] items = new Item[]{new Item("Sulfuras, Hand of Ragnaros", initialSellIn, initialQuality)};
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(initialSellIn - 1, app.items[0].sellIn);
+    }
+
+    @Test
     public void given_default_item_with_0_for_quality_and_0_for_sellIn_should_return_sellIn_decreased_by_1() {
         final int initialSellIn = 0;
         int initialQuality = 0;
@@ -62,6 +72,16 @@ public class GildedRoseTest {
         GildedRose app = new GildedRose(items);
         app.updateQuality();
         assertEquals(initialSellIn - 1, app.items[0].sellIn);
+    }
+
+    @Test
+    public void given_default_item_with_a_lower_than_1_sellIn_and_a_quality_above_0_should_return_quality_decreased_by_1() {
+        final int initialSellIn = -1;
+        int initialQuality = 1;
+        Item[] items = new Item[]{new Item("Default", initialSellIn, initialQuality)};
+        GildedRose app = new GildedRose(items);
+        app.updateQuality();
+        assertEquals(initialQuality - 1, app.items[0].quality);
     }
 
 }
