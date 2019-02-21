@@ -1,5 +1,7 @@
 package com.gildedrose;
 
+import java.util.stream.IntStream;
+
 class GildedRose {
     private static final String AGED_BRIE = "Aged Brie";
     private static final String BACKSTAGE_PASSES_TO_A_TAFKAL_80_ETC_CONCERT = "Backstage passes to a TAFKAL80ETC concert";
