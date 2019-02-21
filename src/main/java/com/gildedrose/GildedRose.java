@@ -17,53 +17,59 @@ class GildedRose {
     }
 
     private void update() {
-        IntStream.range(0, items.length).forEach(i -> {
-            if (!AGED_BRIE.equals(items[i].name)
-                    && !BACKSTAGE_PASSES_TO_A_TAFKAL_80_ETC_CONCERT.equals(items[i].name)) {
-                if (items[i].quality > 0) {
-                    if (!SULFURAS_HAND_OF_RAGNAROS.equals(items[i].name)) {
-                        items[i].quality = items[i].quality - 1;
+        IntStream.range(0, items.length).forEach(index -> {
+            final Item currentItem = items[index];
+            if (!AGED_BRIE.equals(currentItem.name)
+                    && !BACKSTAGE_PASSES_TO_A_TAFKAL_80_ETC_CONCERT.equals(currentItem.name)) {
+                if (currentItem.quality > 0) {
+                    if (!SULFURAS_HAND_OF_RAGNAROS.equals(currentItem.name)) {
+                        updateDefaultItem(currentItem);
                     }
                 }
             } else {
-                if (items[i].quality < 50) {
-                    items[i].quality = items[i].quality + 1;
-
-                    if (BACKSTAGE_PASSES_TO_A_TAFKAL_80_ETC_CONCERT.equals(items[i].name)) {
-                        if (items[i].sellIn < 11) {
-                            if (items[i].quality < 50) {
-                                items[i].quality = items[i].quality + 1;
-                            }
-                        }
-
-                        if (items[i].sellIn < 6) {
-                            if (items[i].quality < 50) {
-                                items[i].quality = items[i].quality + 1;
+                if (currentItem.quality < 50) {
+                    updateAgedBrie(currentItem);
+                    if (BACKSTAGE_PASSES_TO_A_TAFKAL_80_ETC_CONCERT.equals(currentItem.name)) {
+                        if (currentItem.sellIn < 11) {
+                            if (currentItem.quality < 50) {
+                                updateBackstagePassesToATafkal80EtcConcert(currentItem);
                             }
                         }
                     }
                 }
             }
-            if (!SULFURAS_HAND_OF_RAGNAROS.equals(items[i].name)) {
-                items[i].sellIn = items[i].sellIn - 1;
+            if (!SULFURAS_HAND_OF_RAGNAROS.equals(currentItem.name)) {
+                currentItem.sellIn = currentItem.sellIn - 1;
             }
-            if (items[i].sellIn < 0) {
-                if (!AGED_BRIE.equals(items[i].name)) {
-                    if (!BACKSTAGE_PASSES_TO_A_TAFKAL_80_ETC_CONCERT.equals(items[i].name)) {
-                        if (items[i].quality > 0) {
-                            if (!SULFURAS_HAND_OF_RAGNAROS.equals(items[i].name)) {
-                                items[i].quality = items[i].quality - 1;
+            if (currentItem.sellIn < 0) {
+                if (!AGED_BRIE.equals(currentItem.name)) {
+                    if (!BACKSTAGE_PASSES_TO_A_TAFKAL_80_ETC_CONCERT.equals(currentItem.name)) {
+                        if (currentItem.quality > 0) {
+                            if (!SULFURAS_HAND_OF_RAGNAROS.equals(currentItem.name)) {
+                                updateDefaultItem(currentItem);
                             }
                         }
                     } else {
-                        items[i].quality = items[i].quality - items[i].quality;
+                        currentItem.quality = currentItem.quality - currentItem.quality;
                     }
                 } else {
-                    if (items[i].quality < 50) {
-                        items[i].quality = items[i].quality + 1;
+                    if (currentItem.quality < 50) {
+                        currentItem.quality = currentItem.quality + 1;
                     }
                 }
             }
         });
+    }
+
+    private void updateAgedBrie(Item currentItem) {
+        currentItem.quality = currentItem.quality + 1;
+    }
+
+    private void updateBackstagePassesToATafkal80EtcConcert(Item currentItem) {
+        currentItem.quality = currentItem.quality + 1;
+    }
+
+    private void updateDefaultItem(Item currentItem) {
+        currentItem.quality = currentItem.quality - 1;
     }
 }
